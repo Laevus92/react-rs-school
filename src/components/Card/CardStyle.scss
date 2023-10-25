@@ -1,0 +1,20 @@
+.card {
+  display: flex;
+  width: 250px;
+  height: 100px;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px 0;
+  .image {
+    width: 100px;
+    height: 100px;
+  }
+  .card-wrapper {
+    display: flex;
+    flex-direction: column;
+    .name {
+      font-size: 24px;
+      font-weight: 600;
+    }
+  }
+}
