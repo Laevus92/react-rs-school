@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Component, ReactNode } from 'react';
 import CardProps from '../../types/CardProps';
 import PokemonsData from '../../types/PokemonsData';
-import PokeBall from '../../assets/image/png/pokemon-logo-png-1446.png';
 
 class Card extends Component<CardProps> {
   constructor(props: Readonly<{ pokemonsName: string }>) {
@@ -28,20 +27,25 @@ class Card extends Component<CardProps> {
   render(): ReactNode {
     return (
       <div className="card">
-        <img src={PokeBall} alt="pokeball-icon" className="image" />
+        <div className="name">
+          {this.props.pokemonsName[0].toUpperCase() +
+            this.props.pokemonsName.slice(1)}
+        </div>
+        <div
+          className="image"
+          style={{
+            backgroundImage: `url(${this.state.pokemonsData?.sprites.other['official-artwork']?.front_default})`,
+          }}
+        />
         <div className="card-wrapper">
-          <div className="name">
-            {this.props.pokemonsName[0].toUpperCase() +
-              this.props.pokemonsName.slice(1)}
-          </div>
           <div className="param-list">
             <div className="param-item">
               <span className="title">Height: </span>
-              {this.state.pokemonsData?.height} inch
+              {this.state.pokemonsData?.height}
             </div>
             <div className="param-item">
               <span className="title">Weight: </span>
-              {this.state.pokemonsData?.weight} lb
+              {this.state.pokemonsData?.weight}
             </div>
           </div>
         </div>
