@@ -1,0 +1,18 @@
+.search-bar {
+  max-width: 1920px;
+  padding: 10px 0;
+  display: flex;
+
+  .input {
+    display: block;
+    padding: 5px;
+    font-size: 16px;
+    width: 100%;
+  }
+
+  .button {
+    display: block;
+    margin: 0 10px;
+    padding: 5px 15px;
+  }
+}
