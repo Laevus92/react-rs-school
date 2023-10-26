@@ -10,9 +10,11 @@ class App extends Component {
   state: Readonly<{
     allPokemonsNames: string[];
     isLoading: boolean;
+    searchQuery: string;
   }> = {
     allPokemonsNames: [],
     isLoading: true,
+    searchQuery: '',
   };
 
   componentDidMount(): void {
@@ -33,11 +35,23 @@ class App extends Component {
     }
   }
 
+  setSearchQuery(query: string) {
+    this.setState({ searchQuery: query });
+    // console.log(this.state.searchQuery);
+  }
+
   render(): ReactNode {
     return (
       <div className="main-wrapper">
-        <SearchBar names={this.state.allPokemonsNames} />
-        {this.state.isLoading ? <LoadSpinner /> : <ResultsTable />}
+        <SearchBar
+          names={this.state.allPokemonsNames}
+          searchQuery={this.setSearchQuery.bind(this)}
+        />
+        {this.state.isLoading ? (
+          <LoadSpinner />
+        ) : (
+          <ResultsTable searchValue={this.state.searchQuery.toLowerCase()} />
+        )}
       </div>
     );
   }

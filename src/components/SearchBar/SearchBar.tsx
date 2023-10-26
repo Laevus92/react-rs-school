@@ -3,6 +3,7 @@ import './SearchBarStyle.scss';
 
 type SearchProps = {
   names: string[];
+  searchQuery(query: string): void;
 };
 
 class SearchBar extends Component<SearchProps> {
@@ -15,7 +16,7 @@ class SearchBar extends Component<SearchProps> {
   }
 
   handleSubmitClick() {
-    console.log(this.state.value);
+    this.props.searchQuery(this.state.value);
   }
 
   handleVariantsClick(event: MouseEvent<HTMLDivElement>): void {

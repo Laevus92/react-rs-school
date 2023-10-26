@@ -24,6 +24,19 @@ class Card extends Component<CardProps> {
     }
   }
 
+  componentDidUpdate(prevProps: Readonly<CardProps>): void {
+    if (this.props.pokemonsName !== prevProps.pokemonsName) {
+      try {
+        const data = axios.get(
+          `https://pokeapi.co/api/v2/pokemon/${this.props.pokemonsName}`
+        );
+        data.then((response) => this.setState({ pokemonsData: response.data }));
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+
   render(): ReactNode {
     return (
       <div className="card">
