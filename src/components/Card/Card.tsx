@@ -60,7 +60,20 @@ class Card extends Component<CardProps> {
               <span className="title">Weight: </span>
               {this.state.pokemonsData?.weight}
             </div>
+            <div className="param-item">
+              <span className="title">HP: </span>
+              {this.state.pokemonsData?.stats[0].base_stat}
+            </div>
+            <div className="param-item">
+              <span className="title">Attack: </span>
+              {this.state.pokemonsData?.stats[1].base_stat}
+            </div>
           </div>
+        </div>
+        <div
+          className={`type type_${this.state.pokemonsData?.types[0].type.name}`}
+        >
+          {this.state.pokemonsData?.types[0].type.name}
         </div>
       </div>
     );
