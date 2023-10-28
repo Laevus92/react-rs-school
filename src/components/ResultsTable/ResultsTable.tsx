@@ -35,8 +35,6 @@ class ResultsTable extends Component<ResultTableProps> {
 
   fetchData = (offset: number = 0) => {
     this.setState({ isLoading: true });
-    console.log('fetch');
-
     if (this.props.searchValue || localStorage.getItem('searchQuery')) {
       axios
         .get(
@@ -58,7 +56,6 @@ class ResultsTable extends Component<ResultTableProps> {
         })
         .finally(() => this.setState({ isLoading: false }));
     } else {
-      console.log(222);
       axios
         .get(`https://pokeapi.co/api/v2/pokemon?limit=16&offset=${offset}`)
         .then((response) => {
