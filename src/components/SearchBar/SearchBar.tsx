@@ -1,10 +1,6 @@
-import { ChangeEvent, Component, ReactNode, MouseEvent } from 'react';
 import './SearchBarStyle.scss';
-
-type SearchProps = {
-  names: string[];
-  searchQuery(query: string): void;
-};
+import SearchProps from '../../types/SearchProps';
+import { ChangeEvent, Component, ReactNode, MouseEvent } from 'react';
 
 class SearchBar extends Component<SearchProps> {
   state = {

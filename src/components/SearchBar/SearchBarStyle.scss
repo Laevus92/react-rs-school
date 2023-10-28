@@ -13,6 +13,7 @@
     border: 2px solid #3761a8;
     border-radius: 5px;
     background-color: #feca1b;
+    font-family: 'Iceland', sans-serif;
     box-shadow: 0 0 3px 1px black;
   }
 
@@ -26,7 +27,9 @@
     cursor: pointer;
     background-color: #feca1b;
     box-shadow: 0 0 3px 1px black;
+    font-family: 'Iceland', sans-serif;
     font-weight: 600;
+    font-size: 24px;
   }
 
   .list {
@@ -37,10 +40,11 @@
     max-height: 390px;
     border: 1px solid #3761a8;
     overflow-y: scroll;
+    font-family: 'Iceland', sans-serif;
     z-index: 5;
     &::-webkit-scrollbar {
       width: 7px;
-      background-color: #f9f9fd;
+      background-color: #feca1b;
     }
     &::-webkit-scrollbar-thumb {
       background-color: #3761a8;
@@ -51,6 +55,7 @@
       background-color: white;
       border-bottom: 1px solid #3761a8;
       transition: 0.2s linear;
+      background-color: #feca1b;
       &:hover {
         color: white;
         background-color: #3761a8;

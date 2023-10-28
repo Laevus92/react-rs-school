@@ -1,0 +1,22 @@
+.pagination {
+  display: flex;
+  width: 250px;
+  justify-content: space-between;
+  margin: 20px 0;
+  .button {
+    background-color: #feca1b;
+    border: 2px solid #3761a8;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: 'Iceland', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 6px black;
+  }
+}
