@@ -3,7 +3,21 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-.main-wrapper {
-  margin: 0 15px;
+#root {
+  background-image: url(./assets/image/jpg/pokemon-sword-and-shield-poster-art-uhdpaper.com-hd-3.1352.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position-x: center;
+  min-height: 100vh;
+  .main-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 15px;
+    .logo {
+      display: block;
+      max-width: 200px;
+      margin: 20px 0;
+    }
+  }
 }
