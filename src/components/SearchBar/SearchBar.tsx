@@ -8,7 +8,7 @@ type SearchProps = {
 
 class SearchBar extends Component<SearchProps> {
   state = {
-    value: '',
+    value: localStorage.getItem('searchQuery') || '',
   };
 
   handleInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -17,6 +17,7 @@ class SearchBar extends Component<SearchProps> {
 
   handleSubmitClick() {
     this.props.searchQuery(this.state.value);
+    localStorage.setItem('searchQuery', this.state.value);
   }
 
   handleVariantsClick(event: MouseEvent<HTMLDivElement>): void {

@@ -31,9 +31,14 @@ class ResultsTable extends Component<ResultTableProps> {
   fetchData = () => {
     this.setState({ isLoading: true });
 
-    if (this.props.searchValue) {
+    if (this.props.searchValue || localStorage.getItem('searchQuery')) {
       axios
-        .get(`https://pokeapi.co/api/v2/pokemon/${this.props.searchValue}`)
+        .get(
+          `https://pokeapi.co/api/v2/pokemon/${
+            this.props.searchValue ||
+            localStorage.getItem('searchQuery')?.toLowerCase()
+          }`
+        )
         .then((response) => {
           this.setState({ data: [response.data] });
         })
