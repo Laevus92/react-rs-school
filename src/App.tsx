@@ -15,12 +15,14 @@ class App extends Component {
     searchQuery: string;
     offset: number;
     currentPage: number;
+    pokemonNotFound: boolean;
   }> = {
     allPokemonsNames: [],
     isLoading: true,
     searchQuery: '',
     offset: 0,
     currentPage: 1,
+    pokemonNotFound: false,
   };
 
   componentDidMount(): void {
@@ -67,6 +69,10 @@ class App extends Component {
     }
   }
 
+  changeSearchingStatus(status: boolean) {
+    this.setState({ pokemonNotFound: status });
+  }
+
   render(): ReactNode {
     return (
       <div className="main-wrapper">
@@ -74,16 +80,29 @@ class App extends Component {
         <SearchBar
           names={this.state.allPokemonsNames}
           searchQuery={this.setSearchQuery.bind(this)}
+          searchingStatus={this.changeSearchingStatus.bind(this)}
         />
         {this.state.isLoading ? (
           <LoadSpinner />
+        ) : this.state.pokemonNotFound ? (
+          <div className="error-message">
+            Pokemon
+            <span className="title">{` ${
+              localStorage.getItem('searchQuery') || this.state.searchQuery
+            } `}</span>
+            not found 😭
+            <br />
+            Check pokemons name!
+          </div>
         ) : (
           <ResultsTable
             searchValue={this.state.searchQuery.toLowerCase()}
             offset={this.state.offset}
+            searchingStatus={this.changeSearchingStatus.bind(this)}
           />
         )}
-        {this.state.searchQuery !== '' ? null : (
+        {this.state.searchQuery ||
+        localStorage.getItem('searchQuery') ? null : (
           <Pagination
             changePage={this.changePage.bind(this)}
             currentPage={this.state.currentPage}

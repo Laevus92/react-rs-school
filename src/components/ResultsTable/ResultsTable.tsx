@@ -8,6 +8,7 @@ import LoadSpinner from '../LoadSpinner/LoadSpinner';
 type ResultTableProps = {
   searchValue: string;
   offset: number;
+  searchingStatus(status: boolean): void;
 };
 
 class ResultsTable extends Component<ResultTableProps> {
@@ -34,6 +35,7 @@ class ResultsTable extends Component<ResultTableProps> {
 
   fetchData = (offset: number = 0) => {
     this.setState({ isLoading: true });
+    console.log('fetch');
 
     if (this.props.searchValue || localStorage.getItem('searchQuery')) {
       axios
@@ -45,12 +47,18 @@ class ResultsTable extends Component<ResultTableProps> {
         )
         .then((response) => {
           this.setState({ data: [response.data] });
+          this.props.searchingStatus(false);
         })
         .catch((error) => {
           console.error(error);
+          this.setState({ data: [] });
+          if (error.response.status === 404) {
+            this.props.searchingStatus(true);
+          }
         })
         .finally(() => this.setState({ isLoading: false }));
     } else {
+      console.log(222);
       axios
         .get(`https://pokeapi.co/api/v2/pokemon?limit=16&offset=${offset}`)
         .then((response) => {
@@ -58,9 +66,12 @@ class ResultsTable extends Component<ResultTableProps> {
             data: response.data.results,
             totalCount: response.data.count,
           });
+          this.props.searchingStatus(false);
         })
         .catch((error) => {
           console.error(error);
+          this.setState({ data: [] });
+          this.props.searchingStatus(true);
         })
         .finally(() => this.setState({ isLoading: false }));
     }

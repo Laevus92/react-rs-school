@@ -14,6 +14,7 @@ class SearchBar extends Component<SearchProps> {
   handleSubmitClick() {
     this.props.searchQuery(this.state.value);
     localStorage.setItem('searchQuery', this.state.value);
+    this.props.searchingStatus(false);
   }
 
   handleVariantsClick(event: MouseEvent<HTMLDivElement>): void {

@@ -20,4 +20,21 @@
       margin: 20px 0;
     }
   }
+  .error-message {
+    font-family: 'Iceland', sans-serif;
+    text-align: center;
+    font-size: 32px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-shadow: 0 0 6px black;
+    .title {
+      font-family: Pokemon;
+      color: #feca1b;
+      -webkit-text-stroke: 1px #3761a8;
+      text-shadow: 0 0 4px black;
+    }
+  }
 }
