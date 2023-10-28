@@ -5,6 +5,7 @@ import ResultsTable from './components/ResultsTable/ResultsTable';
 import { Component, ReactNode } from 'react';
 import PokemonsArray from './types/PokemonsArray';
 import LoadSpinner from './components/LoadSpinner/LoadSpinner';
+import Logo from './assets/image/svg/62cf234679dbabe18fa50a1e_pokeapi_256 1.svg';
 
 class App extends Component {
   state: Readonly<{
@@ -37,12 +38,12 @@ class App extends Component {
 
   setSearchQuery(query: string) {
     this.setState({ searchQuery: query });
-    // console.log(this.state.searchQuery);
   }
 
   render(): ReactNode {
     return (
       <div className="main-wrapper">
+        <img className="logo" src={Logo} alt="Logo" />
         <SearchBar
           names={this.state.allPokemonsNames}
           searchQuery={this.setSearchQuery.bind(this)}
