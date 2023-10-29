@@ -1,15 +1,10 @@
-import axios from 'axios';
 import './ResultTableStyle.scss';
 import Card from '../Card/Card';
 import { Component, ReactNode } from 'react';
 import PokemonsArray from '../../types/PokemonsArray';
 import LoadSpinner from '../LoadSpinner/LoadSpinner';
-
-type ResultTableProps = {
-  searchValue: string;
-  offset: number;
-  searchingStatus(status: boolean): void;
-};
+import ResultTableProps from '../../types/ResultTableProps';
+import GetPokemonsData from '../../services/GetPokemonsData';
 
 class ResultsTable extends Component<ResultTableProps> {
   state: Readonly<{
@@ -35,40 +30,34 @@ class ResultsTable extends Component<ResultTableProps> {
 
   fetchData = (offset: number = 0) => {
     this.setState({ isLoading: true });
+    const getPokemonsData = new GetPokemonsData();
     if (this.props.searchValue || localStorage.getItem('searchQuery')) {
-      axios
-        .get(
-          `https://pokeapi.co/api/v2/pokemon/${
-            this.props.searchValue ||
+      getPokemonsData
+        .getPokemosData(
+          this.props.searchValue.toLowerCase() ||
             localStorage.getItem('searchQuery')?.toLowerCase()
-          }`
         )
         .then((response) => {
-          this.setState({ data: [response.data] });
+          this.setState({ data: [response] });
           this.props.searchingStatus(false);
         })
-        .catch((error) => {
-          console.error(error);
-          this.setState({ data: [] });
-          if (error.response.status === 404) {
-            this.props.searchingStatus(true);
-          }
+        .catch(() => {
+          this.props.searchingStatus(true);
+          throw new Error("Can't load pokemons data");
         })
         .finally(() => this.setState({ isLoading: false }));
     } else {
-      axios
-        .get(`https://pokeapi.co/api/v2/pokemon?limit=16&offset=${offset}`)
+      getPokemonsData
+        .getPokemonsList(offset)
         .then((response) => {
           this.setState({
-            data: response.data.results,
-            totalCount: response.data.count,
+            data: response.results,
+            totalCount: response.count,
           });
           this.props.searchingStatus(false);
         })
-        .catch((error) => {
-          console.error(error);
-          this.setState({ data: [] });
-          this.props.searchingStatus(true);
+        .catch(() => {
+          throw new Error("Can't load pokemons list");
         })
         .finally(() => this.setState({ isLoading: false }));
     }

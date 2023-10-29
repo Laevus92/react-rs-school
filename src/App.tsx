@@ -1,5 +1,4 @@
 import './App.scss';
-import axios from 'axios';
 import SearchBar from './components/SearchBar/SearchBar';
 import ResultsTable from './components/ResultsTable/ResultsTable';
 import { Component, ReactNode, MouseEvent } from 'react';
@@ -7,6 +6,7 @@ import PokemonsArray from './types/PokemonsArray';
 import LoadSpinner from './components/LoadSpinner/LoadSpinner';
 import Logo from './assets/image/svg/62cf234679dbabe18fa50a1e_pokeapi_256 1.svg';
 import Pagination from './components/pagination/Pagination';
+import GetPokemonsData from './services/GetPokemonsData';
 
 class App extends Component {
   state: Readonly<{
@@ -26,21 +26,19 @@ class App extends Component {
   };
 
   componentDidMount(): void {
-    try {
-      axios
-        .get('https://pokeapi.co/api/v2/pokemon?limit=2000&offset=0')
-        .then((response) => {
-          this.setState({
-            ...this.state,
-            allPokemonsNames: response.data.results.map(
-              (el: PokemonsArray) => el.name
-            ),
-          });
-        })
-        .finally(() => this.setState({ isLoading: false }));
-    } catch (error) {
-      console.error(error);
-    }
+    const getPokemonsData = new GetPokemonsData();
+    getPokemonsData
+      .getNamesArray()
+      .then((response) => {
+        this.setState({
+          ...this.state,
+          allPokemonsNames: response.map((el: PokemonsArray) => el.name),
+        });
+      })
+      .catch(() => {
+        throw new Error("Something went wrong, can't get pokemons names");
+      })
+      .finally(() => this.setState({ isLoading: false }));
   }
 
   setSearchQuery(query: string) {
@@ -48,7 +46,6 @@ class App extends Component {
   }
 
   changePage(event: MouseEvent<HTMLDivElement>) {
-    console.log(event.currentTarget.classList);
     if (
       event.currentTarget.classList.contains('button_prev-page') &&
       this.state.currentPage > 1
