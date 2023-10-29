@@ -74,6 +74,7 @@ class App extends Component {
     return (
       <div className="main-wrapper">
         <img className="logo" src={Logo} alt="Logo" />
+
         <SearchBar
           names={this.state.allPokemonsNames}
           searchQuery={this.setSearchQuery.bind(this)}

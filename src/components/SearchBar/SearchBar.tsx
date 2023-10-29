@@ -1,10 +1,12 @@
 import './SearchBarStyle.scss';
 import SearchProps from '../../types/SearchProps';
 import { ChangeEvent, Component, ReactNode, MouseEvent } from 'react';
+import GetPokemonsData from '../../services/GetPokemonsData';
 
 class SearchBar extends Component<SearchProps> {
   state = {
     value: localStorage.getItem('searchQuery') || '',
+    error: false,
   };
 
   handleInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -17,11 +19,24 @@ class SearchBar extends Component<SearchProps> {
     this.props.searchingStatus(false);
   }
 
+  async breakApp() {
+    const getPokemonsData = new GetPokemonsData();
+    try {
+      await getPokemonsData.makeFakeRequest();
+    } catch (error) {
+      this.setState({ error: true });
+    }
+  }
+
   handleVariantsClick(event: MouseEvent<HTMLDivElement>): void {
     this.setState({ value: event.currentTarget.innerText });
   }
 
   render(): ReactNode {
+    const { error } = this.state;
+    if (error) {
+      throw new Error();
+    }
     return (
       <div className="search-bar">
         <input
@@ -51,6 +66,9 @@ class SearchBar extends Component<SearchProps> {
         ) : null}
         <button className="button" onClick={this.handleSubmitClick.bind(this)}>
           Search
+        </button>
+        <button className="button" onClick={this.breakApp.bind(this)}>
+          Be careful!
         </button>
       </div>
     );

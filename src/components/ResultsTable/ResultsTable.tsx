@@ -5,6 +5,7 @@ import PokemonsArray from '../../types/PokemonsArray';
 import LoadSpinner from '../LoadSpinner/LoadSpinner';
 import ResultTableProps from '../../types/ResultTableProps';
 import GetPokemonsData from '../../services/GetPokemonsData';
+import { AxiosError } from 'axios';
 
 class ResultsTable extends Component<ResultTableProps> {
   state: Readonly<{
@@ -28,38 +29,36 @@ class ResultsTable extends Component<ResultTableProps> {
     }
   }
 
-  fetchData = (offset: number = 0) => {
+  fetchData = async (offset: number = 0) => {
     this.setState({ isLoading: true });
     const getPokemonsData = new GetPokemonsData();
     if (this.props.searchValue || localStorage.getItem('searchQuery')) {
-      getPokemonsData
-        .getPokemosData(
+      try {
+        const response = await getPokemonsData.getPokemosData(
           this.props.searchValue.toLowerCase() ||
             localStorage.getItem('searchQuery')?.toLowerCase()
-        )
-        .then((response) => {
-          this.setState({ data: [response] });
-          this.props.searchingStatus(false);
-        })
-        .catch(() => {
+        );
+        this.setState({ data: [response], isLoading: false });
+        this.props.searchingStatus(false);
+      } catch (error: unknown) {
+        if (error instanceof AxiosError && error.response?.status === 404) {
           this.props.searchingStatus(true);
+        } else {
           throw new Error("Can't load pokemons data");
-        })
-        .finally(() => this.setState({ isLoading: false }));
+        }
+      }
     } else {
-      getPokemonsData
-        .getPokemonsList(offset)
-        .then((response) => {
-          this.setState({
-            data: response.results,
-            totalCount: response.count,
-          });
-          this.props.searchingStatus(false);
-        })
-        .catch(() => {
-          throw new Error("Can't load pokemons list");
-        })
-        .finally(() => this.setState({ isLoading: false }));
+      try {
+        const response = await getPokemonsData.getPokemonsList(offset);
+        this.setState({
+          data: response.results,
+          totalCount: response.count,
+          isLoading: false,
+        });
+        this.props.searchingStatus(false);
+      } catch (error) {
+        throw new Error("Can't load pokemons list");
+      }
     }
   };
 
