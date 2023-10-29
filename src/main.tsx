@@ -9,7 +9,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <ErrorBoundary
       fallback={
         <div className="error">
-          Nice, you are break app right now! <br /> Reload page!
+          {`Nice, you've just broken the app. \n Please, reload the page!`}
         </div>
       }
     >
