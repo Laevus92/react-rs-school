@@ -1,83 +1,57 @@
 import './CardStyle.scss';
-import axios from 'axios';
-import { Component, ReactNode } from 'react';
+import { useEffect, useState } from 'react';
 import CardProps from '../../types/CardProps';
 import PokemonsData from '../../types/PokemonsData';
+import GetPokemonsData from '../../services/GetPokemonsData';
 
-class Card extends Component<CardProps> {
-  constructor(props: Readonly<{ pokemonsName: string }>) {
-    super(props);
-  }
+export const Card = ({ pokemonsName }: CardProps) => {
+  const getPokemonsData = new GetPokemonsData();
 
-  state: Readonly<{ pokemonsData: PokemonsData | null }> = {
-    pokemonsData: null,
-  };
+  const [pokemonsData, setPokemonsData] = useState<PokemonsData | null>(null);
 
-  componentDidMount(): void {
-    try {
-      const data = axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${this.props.pokemonsName}`
-      );
-      data.then((response) => this.setState({ pokemonsData: response.data }));
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  useEffect(() => {
+    const data = getPokemonsData.getPokemosData(pokemonsName);
+    data
+      .then((response) => setPokemonsData(response))
+      .catch(() => {
+        throw new Error('Something went wrong');
+      });
+  }, [pokemonsName]);
 
-  componentDidUpdate(prevProps: Readonly<CardProps>): void {
-    if (this.props.pokemonsName !== prevProps.pokemonsName) {
-      try {
-        const data = axios.get(
-          `https://pokeapi.co/api/v2/pokemon/${this.props.pokemonsName}`
-        );
-        data.then((response) => this.setState({ pokemonsData: response.data }));
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  }
-
-  render(): ReactNode {
-    return (
-      <div className="card">
-        <div className="name">
-          {this.props.pokemonsName[0].toUpperCase() +
-            this.props.pokemonsName.slice(1)}
-        </div>
-        <div
-          className="image"
-          style={{
-            backgroundImage: `url(${this.state.pokemonsData?.sprites.other['official-artwork']?.front_default})`,
-          }}
-        />
-        <div className="card-wrapper">
-          <div className="param-list">
-            <div className="param-item">
-              <span className="title">Height: </span>
-              {this.state.pokemonsData?.height}
-            </div>
-            <div className="param-item">
-              <span className="title">Weight: </span>
-              {this.state.pokemonsData?.weight}
-            </div>
-            <div className="param-item">
-              <span className="title">HP: </span>
-              {this.state.pokemonsData?.stats[0].base_stat}
-            </div>
-            <div className="param-item">
-              <span className="title">Attack: </span>
-              {this.state.pokemonsData?.stats[1].base_stat}
-            </div>
+  return (
+    <div className="card">
+      <div className="name">
+        {pokemonsName[0].toUpperCase() + pokemonsName.slice(1)}
+      </div>
+      <div
+        className="image"
+        style={{
+          backgroundImage: `url(${pokemonsData?.sprites.other['official-artwork']?.front_default})`,
+        }}
+      />
+      <div className="card-wrapper">
+        <div className="param-list">
+          <div className="param-item">
+            <span className="title">Height: </span>
+            {pokemonsData?.height}
+          </div>
+          <div className="param-item">
+            <span className="title">Weight: </span>
+            {pokemonsData?.weight}
+          </div>
+          <div className="param-item">
+            <span className="title">HP: </span>
+            {pokemonsData?.stats[0].base_stat}
+          </div>
+          <div className="param-item">
+            <span className="title">Attack: </span>
+            {pokemonsData?.stats[1].base_stat}
           </div>
         </div>
-        <div
-          className={`type type_${this.state.pokemonsData?.types[0].type.name}`}
-        >
-          {this.state.pokemonsData?.types[0].type.name}
-        </div>
       </div>
-    );
-  }
-}
-
-export default Card;
+      <div className={`type type_${pokemonsData?.types[0].type.name}`}>
+        {pokemonsData?.types[0].type.name}
+      </div>
+    </div>
+  );
+};
