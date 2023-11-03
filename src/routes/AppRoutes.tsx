@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Page } from '../components/Page/Page';
-import { AppRoutesProps } from '../types/AppRoutesProps';
+import AppRoutesProps from '../types/AppRoutesProps';
 
 export const AppRoutes = (props: AppRoutesProps) => {
   return (

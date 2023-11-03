@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { ResultsTable } from '../ResultsTable/ResultsTable';
 import { Pagination } from '../pagination/Pagination';
-import { AppRoutesProps } from '../../types/AppRoutesProps';
+import AppRoutesProps from '../../types/AppRoutesProps';
 
 export const Page = ({ props }: { props: AppRoutesProps }) => {
   const { number } = useParams();

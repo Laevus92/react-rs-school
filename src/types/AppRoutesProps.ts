@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
-export type AppRoutesProps = {
+type AppRoutesProps = {
   searchValue: string;
   offset: number;
   searchingStatus: Dispatch<SetStateAction<boolean>>;
@@ -9,3 +9,4 @@ export type AppRoutesProps = {
   setOffset: Dispatch<SetStateAction<number>>;
   setCurrentPage: Dispatch<SetStateAction<number>>;
 };
+export default AppRoutesProps;
