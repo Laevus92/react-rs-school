@@ -1,12 +1,14 @@
 import './App.scss';
 import { SearchBar } from './components/SearchBar/SearchBar';
-import { ResultsTable } from './components/ResultsTable/ResultsTable';
-import { MouseEvent, useState, useEffect } from 'react';
+// import { ResultsTable } from './components/ResultsTable/ResultsTable';
+import { useState, useEffect } from 'react';
 import PokemonsArray from './types/PokemonsArray';
 import { LoadSpinner } from './components/LoadSpinner/LoadSpinner';
 import Logo from './assets/image/svg/62cf234679dbabe18fa50a1e_pokeapi_256 1.svg';
-import { Pagination } from './components/pagination/Pagination';
+// import { Pagination } from './components/pagination/Pagination';
 import GetPokemonsData from './services/GetPokemonsData';
+import { AppRoutes } from './routes/AppRoutes';
+import { useNavigate } from 'react-router-dom';
 
 export const App = () => {
   const [pokemonsData, setPokemonsData] = useState<string[]>([]);
@@ -17,23 +19,11 @@ export const App = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [offset, setOffset] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  function changePage(event: MouseEvent<HTMLDivElement>) {
-    if (
-      event.currentTarget.classList.contains('button_prev-page') &&
-      currentPage > 1
-    ) {
-      setCurrentPage((prevValue) => prevValue - 1);
-      setOffset((prevValue) => prevValue - 16);
-    } else if (
-      event.currentTarget.classList.contains('button_next-page') &&
-      currentPage < Math.ceil(pokemonsData.length / 16)
-    ) {
-      setCurrentPage((prevValue) => prevValue + 1);
-      setOffset((prevValue) => prevValue + 16);
-    }
-  }
+  const navigate = useNavigate();
+
   useEffect(() => {
     const getPokemonsData = new GetPokemonsData();
+    navigate('/page/1');
     let loading = true;
     setIsLoading(true);
     if (loading) {
@@ -73,18 +63,35 @@ export const App = () => {
           Check pokemons name!
         </div>
       ) : (
-        <ResultsTable
+        <AppRoutes
           searchValue={searchQuery.toLowerCase()}
           offset={offset}
           searchingStatus={setIsPokemonNotFound}
+          currentPage={currentPage}
+          pokemonsData={pokemonsData}
+          setOffset={setOffset}
+          setCurrentPage={setCurrentPage}
         />
-      )}
-      {searchQuery || localStorage.getItem('searchQuery') ? null : (
-        <Pagination changePage={changePage} currentPage={currentPage} />
       )}
     </div>
   );
 };
+
+// (
+//   <ResultsTable
+//     searchValue={searchQuery.toLowerCase()}
+//     offset={offset}
+//     searchingStatus={setIsPokemonNotFound}
+//   />
+// )}
+// {searchQuery || localStorage.getItem('searchQuery') ? null : (
+//   <Pagination
+//     currentPage={currentPage}
+//     pokemonsData={pokemonsData}
+//     setOffset={setOffset}
+//     setCurrentPage={setCurrentPage}
+//   />
+// )
 
 // class App extends Component {
 //   state: Readonly<{
