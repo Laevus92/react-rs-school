@@ -1,0 +1,116 @@
+@font-face {
+  font-family: Pokemon;
+  src: url(../../../public/fonts/Pokemon_s.ttf);
+}
+@import url('https://fonts.googleapis.com/css2?family=Iceland&display=swap');
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 250px;
+  justify-content: space-around;
+  align-items: center;
+  margin: 15px;
+  border: 2px solid #3761a8;
+  border-radius: 5px;
+  background-image: url(../../assets/image/jpg/32476733_7951512.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: 0 0 10px 3px black;
+  position: relative;
+  transition: 0.3s linear;
+  &:hover {
+    transition: 0.3s linear;
+    transform: scale(1.2);
+  }
+  .image {
+    width: 100%;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+  .card-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px 0;
+    font-family: 'Iceland', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 6px black;
+    .param-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 40px;
+    }
+  }
+  .name {
+    font-family: Pokemon;
+    color: #feca1b;
+    -webkit-text-stroke: 1px #3761a8;
+    text-shadow: 0 0 4px black;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .type {
+    position: absolute;
+    font-family: 'Iceland', sans-serif;
+    text-shadow: 0 0 6px black;
+    border-radius: 15px;
+    top: 0;
+    right: 0;
+    color: white;
+    font-weight: 600;
+    padding: 3px 8px;
+    margin: 5px;
+    &_grass {
+      background-color: blue;
+    }
+    &_fire {
+      background-color: blueviolet;
+    }
+    &_water {
+      background-color: aqua;
+    }
+    &_bug {
+      background-color: brown;
+    }
+    &_electric {
+      background-color: coral;
+    }
+    &_normal {
+      background-color: gray;
+    }
+    &_poison {
+      background-color: crimson;
+    }
+    &_fairy {
+      background-color: aquamarine;
+    }
+    &_ground {
+      background-color: darkcyan;
+    }
+    &_fighting {
+      background-color: darkslategray;
+    }
+    &_psychic {
+      background-color: dodgerblue;
+    }
+    &_rock {
+      background-color: gold;
+    }
+    &_ghost {
+      background-color: lawngreen;
+    }
+    &_ice {
+      background-color: olive;
+    }
+    &_dragon {
+      background-color: red;
+    }
+  }
+}

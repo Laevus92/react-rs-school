@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#root {
+  background-image: url(./assets/image/jpg/pokemon-sword-and-shield-poster-art-uhdpaper.com-hd-3.1352.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position-x: center;
+  min-height: 100vh;
+  .main-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 15px;
+    .logo {
+      display: block;
+      max-width: 200px;
+      margin: 20px 0;
+    }
+  }
+  .error-message {
+    font-family: 'Iceland', sans-serif;
+    text-align: center;
+    font-size: 32px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-shadow: 0 0 6px black;
+    .title {
+      font-family: Pokemon;
+      color: #feca1b;
+      -webkit-text-stroke: 1px #3761a8;
+      text-shadow: 0 0 4px black;
+    }
+  }
+}
